@@ -5,7 +5,7 @@ Lab utilizing Docker (or Podman) to spin up a lightweight lab to test Ansible
 * This lab is based on @AKI1620 | https://github.com/AKI1620/ansible-docker-lab
 * Not a fan of Ubuntu, so creating my own repo to modify environment to better fit my workflow
 * Containers should will be built on something like Rocky 8, or Alma 8
-* I'll probably use this repo as a baseline, and other environment I create will have their own repo/branch.
+* This is the main branch, intended for linux machines, doesn't work on Mac
 
 # Pre-Requisites
 * Docker Desktop or Podman
@@ -23,7 +23,7 @@ ansible-docker-lab/
 ├── build.sh
 ├── Dockerfile
 ├── docker-compose.yml
-├── inventory.ini
+├── hosts
 ├── playbooks/
 │   └── install-nginx.yml
 ├── README.md
@@ -31,8 +31,9 @@ ansible-docker-lab/
 
 # Quick Start
 1. Build the image
+You can altar the default credentials in the script.
 ```
-docker build --no-cache -t rockyssh:8.0
+sh build.sh
 ```
 2. Start the test nodes
 ```
