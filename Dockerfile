@@ -2,7 +2,7 @@
 FROM rockylinux/rockylinux:8.10-minimal
 
 # Install base tools (microdnf is available on -minimal)
-# Includes: SSH server/clients, Python3 (for Ansible), sudo, and handy utilities
+# Got a bad mirror on first build, so wipe and rebuild cache, then install packages 
 RUN microdnf -y clean all && rm -rf /var/yum/cache && microdnf -y makecache --refresh \
       && microdnf -y install \
       openssh-server openssh-clients sudo python3 \
@@ -11,7 +11,7 @@ RUN microdnf -y clean all && rm -rf /var/yum/cache && microdnf -y makecache --re
   && microdnf -y clean all \
   && rm -rf /var/cache/yum
 
-# SSH hardening knobs for a lab: allow root + password auth (lab-only!)
+# SSH hardening knobs for a lab: allow root + password auth
 RUN sed -i 's/^#\?PermitRootLogin .*/PermitRootLogin yes/' /etc/ssh/sshd_config && \
     sed -i 's/^#\?PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config && \
     mkdir -p /var/run/sshd
@@ -28,9 +28,9 @@ RUN useradd -m -s /bin/bash ${USERNAME} \
 WORKDIR /appdata
 RUN chown -R ${USERNAME}:${USERNAME} /appdata
 
-# Simple entrypoint: generate host keys if missing, then run sshd in foreground
-COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh
-
+# Expose port 22 
 EXPOSE 22
+
+# SSHD get run in the foreground as PID 1, if it dies, so does the container. This could be changed, but honestly if you can't ssh in, no ansible.
+# Below generates host ssh keys if they don't exists, and starts sshd
 ENTRYPOINT ["/bin/sh","-c","ssh-keygen -A >/dev/null 2>&1 || true; exec /usr/sbin/sshd -D -e"]
