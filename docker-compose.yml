@@ -1,36 +1,34 @@
-version: '3.9'
-
 services:
-  ubuntu1:
-    image: sshimage:uat
-    container_name: ubuntu1
-    hostname: TESTNODE01
+  node1:
+    image: rocky8-ansible:8.10
+    container_name: node1
+    hostname: node01
     networks:
-      ubuntu-net:
-        ipv4_address: 10.20.0.10
+      lab-net:
+        ipv4_address: 10.0.0.10
     tty: true
 
-  ubuntu2:
-    image: sshimage:uat
-    container_name: ubuntu2
-    hostname: TESTNODE02
+  node2:
+    image: rocky8-ansible:8.10
+    container_name: node2
+    hostname: node02
     networks:
-      ubuntu-net:
-        ipv4_address: 10.20.0.11
+      lab-net:
+        ipv4_address: 10.0.0.11
     tty: true
 
-  ubuntu3:
-    image: sshimage:uat
-    container_name: ubuntu3
-    hostname: TESTNODE03
+  node3:
+    image: rocky8-ansible:8.10
+    container_name: node3
+    hostname: node03
     networks:
-      ubuntu-net:
-        ipv4_address: 10.20.0.12
+      lab-net:
+        ipv4_address: 10.0.0.12
     tty: true
 
 networks:
-  ubuntu-net:
+  lab-net:
     driver: bridge
     ipam:
       config:
-        - subnet: 10.20.0.0/24
+        - subnet: 10.0.0.0/24
