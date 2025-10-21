@@ -5,7 +5,7 @@ Lab utilizing Docker (or Podman) to spin up a lightweight lab to test Ansible
 * This lab is based on @AKI1620 | https://github.com/AKI1620/ansible-docker-lab
 * Not a fan of Ubuntu, so creating my own repo to modify environment factors more closely to my workflow
 * Containers should will be built on something like Rocky 8, or Alma 8
-* I'll probably use this repo as a baseline, and other environment I create will have their own repo.
+* I'll probably use this repo as a baseline, and other environment I create will have their own repo/branch.
 
 # Usage Guide
 * Not only is this a good lab, but is a nice little introduction to Docker, as the docker and compose files are pretty clear on what they're doing.
