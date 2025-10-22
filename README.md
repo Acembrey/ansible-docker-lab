@@ -1,20 +1,23 @@
 # simple-ansible-docker-lab
-Lab utilizing Docker (or Podman) to spin up a lightweight lab to test Ansible
+Lab utilizing Docker (or Podman) to spin up a lab to test Ansible
 
 # Overview
-* This branch contains some seperate configurations for mac
-* I'll have to update this readme later, basically just creates a ansible control node, and three managed nodes.
-* I'd like to clean this up a lot, images are built off of what I could find scraping the internet rather than research. 
-* I wouldn't really consider this to be a lightweight lab.
+* This is an isolated Ansible lab that can run indenpendent from your network
+* Compose file builds two images, one for a control node, one for managed node
+* Compose file creates a single control node, and three managed.
+* Control node binds two directories to the working environment called "ansible-data" and "ansible-collections"
 
 # Pre-Requisites
+* 2GB of free space
+* Personal SSH key
 * Docker Desktop or Podman
-* docker-podman compose plugin (if using podman, will need to install epel on rhel systems)
+* docker-podman compose plugin (if using podman)
 
 # Usage Guide
-* This ended up being more work than I thought
+* I mainly built this to work with Mac
 * I recommend using podman and podman-compose with the main branch on linux (or WSL)
-* With the above being said, this is an isolated environment, and semi modular.
+* My goal with this project was to create a easy method to spin up a virtual environment without the need of server maintenance.
+* Ansible data should be persistent, meaning any work you do, will stay. If you want a completely fresh start, wipe "ansible-data"
 
 # File Structure
 
@@ -54,3 +57,7 @@ docker exec -it ansible bash
 ```
 ansible -m ping testnodes
 ```
+
+# Addendum
+* Will change how the images are built
+* Will change entry points to be "normal"
