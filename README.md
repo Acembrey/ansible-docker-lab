@@ -10,7 +10,6 @@ Lab utilizing Docker (or Podman) to spin up a lightweight lab to test Ansible
 # Pre-Requisites
 * Docker Desktop or Podman
 * docker-podman compose plugin (if using podman, will need to install epel on rhel systems)
-* ansible installed on host
 
 # Usage Guide
 * This ended up being more work than I thought
