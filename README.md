@@ -46,7 +46,12 @@ docker compose build
 docker compose up -d
 docker exec -it ansible bash
 ```
-2. Ping the servers
+2. Shell into the ansible node
+```
+docker exec -it ansible bash
+```
+
+3. Run a command
 ```
 ansible -m ping testnodes
 ```
