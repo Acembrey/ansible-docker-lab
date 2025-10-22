@@ -6,6 +6,7 @@ Lab utilizing Docker (or Podman) to spin up a lab to test Ansible
 * Compose file builds two images, one for a control node, one for managed node
 * Compose file creates a single control node, and three managed.
 * Control node binds two directories to the working environment called "ansible-data" and "ansible-collections"
+* This lab is not as lightweight as I'd hoped, but it is still quick and easy. Unless something breaks.
 
 # Pre-Requisites
 * 2GB of free space
@@ -59,5 +60,5 @@ ansible -m ping testnodes
 
 # Things to change
 * How the images are built
-* Entry points
+* Change entry point to systemd on managed nodes
 * Import user ssh key (or create one that can be imported)
