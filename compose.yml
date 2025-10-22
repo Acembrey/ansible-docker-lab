@@ -1,0 +1,66 @@
+services:
+  ansible:
+    build:
+      context: ./images/control
+      args:
+        USERNAME: ${USERNAME}
+        PASSWORD: ${PASSWORD}
+    image: ${CTRL_IMAGE}
+    container_name: ansible
+    hostname: ansible
+    networks:
+      lab-net:
+        ipv4_address: 10.20.0.5
+    volumes:
+      - ./ansible-data:/etc/ansible
+      - ./ansible-collections:/root/.ansible/collections
+    tty: true
+    restart: unless-stopped
+
+  node1:
+    build:
+      context: ./images/node
+      args:
+        USERNAME: ${USERNAME}
+        PASSWORD: ${PASSWORD}
+    image: ${NODE_IMAGE}
+    container_name: node1
+    hostname: node01
+    networks:
+      lab-net:
+        ipv4_address: 10.20.0.10
+    tty: true
+    restart: unless-stopped
+    # macOS only: publish to reach from host:
+    # ports: ["2221:22"]
+
+  node2:
+    image: ${NODE_IMAGE}               # reuse built image
+    depends_on: [node1]
+    container_name: node2
+    hostname: node02
+    networks:
+      lab-net:
+        ipv4_address: 10.20.0.11
+    tty: true
+    restart: unless-stopped
+    # macOS: ports: ["2222:22"]
+
+  node3:
+    image: ${NODE_IMAGE}
+    depends_on: [node1]
+    container_name: node3
+    hostname: node03
+    networks:
+      lab-net:
+        ipv4_address: 10.20.0.12
+    tty: true
+    restart: unless-stopped
+    # macOS: ports: ["2223:22"]
+
+networks:
+  lab-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.20.0.0/24

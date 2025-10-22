@@ -3,56 +3,50 @@ Lab utilizing Docker (or Podman) to spin up a lightweight lab to test Ansible
 
 # Overview
 * This branch contains some seperate configurations for mac
+* I'll have to update this readme later, basically just creates a ansible control node, and three managed nodes.
+* I'd like to clean this up a lot, images are built off of what I could find scraping the internet rather than research. 
+* I wouldn't really consider this to be a lightweight lab.
 
 # Pre-Requisites
 * Docker Desktop or Podman
 * docker-podman compose plugin (if using podman, will need to install epel on rhel systems)
 * ansible installed on host
-  
+
 # Usage Guide
-* Not only is this a good lab, but is a nice little introduction to Docker, as the docker and compose files are pretty clear on what they're doing.
-* Once the image is built, you can save it for offline usage.
-* I will be using this lab in conjuction with Sander Van Vugt study material for RHCE
+* This ended up being more work than I thought
+* I recommend using podman and podman-compose with the main branch on linux (or WSL)
+* With the above being said, this is an isolated environment, and semi modular.
 
 # File Structure
+
 ```
-ansible-docker-lab/
-├── build.sh
-├── Dockerfile
-├── docker-compose.yml
-├── hosts
-├── playbooks/
-│   └── install-nginx.yml
-├── README.md
+ansible-lab/
+├─ compose.yml
+├─ .env
+├─ images/
+│  ├─ control/
+│  │  └─ Dockerfile
+│  └─ node/
+│     └─ Dockerfile
+├─ ansible-data/
+│  ├─ ansible.cfg
+│  ├─ hosts
+│  ├─ group_vars/
+│  ├─ host_vars/
+│  ├─ roles/
+│  ├─ playbooks/
+│  └─ .vault_pass.txt
+└─ ansible-collections/
 ```
 
 # Quick Start
-1. Build the image
-You can altar the default credentials in the script.
+1. Start the environment
 ```
-sh build.sh
+docker compose build
+docker compose up -d
+docker exec -it ansible bash
 ```
-2. Start the test nodes
+2. Ping the servers
 ```
-docker-compose up -d
-```
-3. Verify SSH connectivity
-```
-ssh appuser@10.20.0.10
-# password: Admin@123
-```
-4. Run a playbook
-```
-ansible-playbook -i inventory.ini playbooks/install-nginx.yml
-```
-5. Tear down
-```
-docker compose down
-```
-
-# Default Credentials
-```
-Username: appuser
-Password: Admin@123
-Privilege: sudo enabled
+ansible -m ping testnodes
 ```

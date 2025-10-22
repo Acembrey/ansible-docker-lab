@@ -1,0 +1,9 @@
+[testnodes]
+10.20.0.10 ansible_user=appuser ansible_password=supersecret # ansible_become=yes
+10.20.0.11 ansible_user=appuser ansible_password=supersecret # ansible_become=yes
+10.20.0.12 ansible_user=appuser ansible_password=supersecret # ansible_become=yes
+
+[testname]
+node1
+node2
+node3
