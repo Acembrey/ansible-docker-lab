@@ -9,7 +9,6 @@ Lab utilizing Docker (or Podman) to spin up a lab to test Ansible
 
 # Pre-Requisites
 * 2GB of free space
-* Personal SSH key
 * Docker Desktop or Podman
 * docker-podman compose plugin (if using podman)
 
@@ -58,6 +57,7 @@ docker exec -it ansible bash
 ansible -m ping testnodes
 ```
 
-# Addendum
-* Will change how the images are built
-* Will change entry points to be "normal"
+# Things to change
+* How the images are built
+* Entry points
+* Import user ssh key (or create one that can be imported)
